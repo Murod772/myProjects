@@ -1,0 +1,7 @@
+{
+  "name": "mvider",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
