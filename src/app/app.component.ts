@@ -18,6 +18,11 @@ export class AppComponent {
   public selectedIndex = 0;
   public appPages = [
     {
+      title: 'Profile',
+      url: '../dispatcher/profile',
+      icon: 'person'
+    },
+    {
       title: 'Loads',
       url: '../dispatcher/loads/current',
       icon: 'albums'
@@ -52,11 +57,6 @@ export class AppComponent {
       url: '../dispatcher/settings',
       icon: 'settings'
     },
-    // {
-    //   title: 'Profile',
-    //   url: 'profile',
-    //   icon: 'person'
-    // },
     // {
     //   title: 'Log-Out',
     //   url: 'auth',

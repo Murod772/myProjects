@@ -45,6 +45,15 @@ export class DriversService {
     return [email, name];
   }
 
+  addDriver(){
+    this.getUsers().subscribe((user) => {
+      this.comp = user;
+    });
+    if(this.comp){
+      return this.db.collection(`companies/${this.comp}/drivers/inactive/ready`, ref => ref.where('status', '==', 'Ready')).add
+    }
+  }
+
   getDriver(){
     this.getUsers().subscribe((user) => {
       this.comp = user;

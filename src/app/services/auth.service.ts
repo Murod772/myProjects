@@ -69,8 +69,16 @@ export class AuthService {
            this.comp = credentials.company;
           }).then(() => {
             if(credentials.role == 'DRIVER'){
-              return this.db.doc(`companies/${this.comp}/users/${data.user.uid}`).update({
-                status: 'Ready'
+              return this.db.collection(`companies/${this.comp}/drivers/inactive/${data.user.uid}`).add({
+                name: credentials.name,
+                company: credentials.company,
+                mc: credentials.mc,
+                phone: credentials.phone,
+                email: credentials.email,
+                role: credentials.role,
+                status: 'Ready',
+                location: 'City, ST',
+                created: firebase.firestore.FieldValue.serverTimestamp()
               })
             }
           })
