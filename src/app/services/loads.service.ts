@@ -118,8 +118,7 @@ export class LoadsService {
     if (this.comp) {
       return this.db
         .doc(`companies/${this.comp}/currentLoads/${id}`)
-        .valueChanges()
-        .pipe(take(1));
+        .valueChanges();
     }
   }
 

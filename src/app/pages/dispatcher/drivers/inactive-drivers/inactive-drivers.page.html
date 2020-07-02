@@ -14,7 +14,7 @@
         <div class="ion-text-center" *ngIf="isLoading" >
           <ion-spinner color="primary"></ion-spinner>
         </div>
-        <div class="ion-text-center" *ngIf="!isLoading && drivers.length <= 0"><p>No Loads Yet</p></div>
+        <div class="ion-text-center" *ngIf="!isLoading && drivers.length <= 0"><p>No Drivers Yet</p></div>
 
         <ion-list *ngIf="!isLoading && drivers.length > 0" lines="none">
           <ion-item *ngFor="let driver of drivers">

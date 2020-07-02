@@ -13,7 +13,7 @@ import * as firebase from 'firebase/app';
 export class AssignLoadPage implements OnInit {
   form: FormGroup;
 
-  constructor(private fb: FormBuilder, private loadsService: LoadsService, private router: Router, private navCtrl: NavController) { }
+  constructor(private fb: FormBuilder, private loadsService: LoadsService, private router: Router) { }
 
   ngOnInit() {
     this.form = this.fb.group({
@@ -34,6 +34,7 @@ export class AssignLoadPage implements OnInit {
     console.log('On create load works!')
     this.loadsService.addLoad(this.form.value).then(res => {
     this.form.reset();
+    this.router.navigateByUrl('dispatcher/loads/current')
     return res;
     })
   }

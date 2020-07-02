@@ -6,7 +6,7 @@ import { Observable, from, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { NavController } from '@ionic/angular';
 import {  MenuController } from '@ionic/angular';
-import { take, map } from 'rxjs/operators';
+import { take, map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +15,8 @@ export class AuthService {
 
   comp = '';
   user: Observable<any>;
+  id = '';
+  name = '';
 
   // comp = this.user.pipe(
   //   take(1),
@@ -27,14 +29,21 @@ export class AuthService {
   constructor(private afAuth: AngularFireAuth, private db: AngularFirestore, private navCtrl: NavController, public menu: MenuController) {
     
     this.user = this.afAuth.authState.pipe(
+      tap((user) => {
+        this.id = user.uid;
+      }),
       switchMap(user => {
         if (user) {
+          this.id = user.uid;
           return this.db.doc(`users/${user.uid}`).valueChanges();
         } else {
           return of(null);
         }
       })
     )
+    
+    // this.id = firebase.auth().currentUser.uid;
+    
    }
 
 
@@ -98,6 +107,13 @@ export class AuthService {
         }
       })
     )
+  }
+
+  updateUser(name) {
+    console.log(name)
+    return this.db.doc(`users/${this.id}`).update({
+      name
+    }); //I need user Id to get user data and then Update it and run your 
   }
 
 }

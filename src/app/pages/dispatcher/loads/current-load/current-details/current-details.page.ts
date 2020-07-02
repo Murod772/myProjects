@@ -1,9 +1,7 @@
 import { Subscription } from 'rxjs';
 import { LoadsService } from './../../../../../services/loads.service';
 import { Component, OnInit } from '@angular/core';
-import { NgIf } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { take } from 'rxjs/operators';
 import { NavController } from '@ionic/angular';
 
 @Component({
@@ -23,24 +21,44 @@ export class CurrentDetailsPage implements OnInit {
     to: ''
   };
   isLoading = false;
-  loadId = null;
+  loadId = '';
   private loadsSub: Subscription;
 
-  constructor(private loadsService: LoadsService, private activatedRoute: ActivatedRoute, private navCtrl: NavController) { }
-
-  ngOnInit() {
+  constructor(private loadsService: LoadsService, private activatedRoute: ActivatedRoute, private navCtrl: NavController) {
+    
+    
   }
+  
+  ngOnInit() {
+    
+    this.activatedRoute.paramMap.subscribe(paramMap => {
+      this.loadId = paramMap.get('loadId');
+    })
 
-  ionViewWillEnter(){
-
-    this.loadId = this.activatedRoute.snapshot.paramMap.get('id');
-
-    if (!this.loadsService.getLoadById(this.loadId))
-    {
+        
+    if (!this.loadsService.getLoadById(this.loadId) ) {
       setTimeout(() => {
-        this.isLoading = true;
-        this.loadsSub = this.loadsService.getLoadById(this.loadId).subscribe(
-          res => {
+       this.loadsService
+          .getLoadById(this.loadId)
+          .subscribe((res) => {
+            if (res) {
+              this.loads = {
+                distance: res['distance'],
+                driverName: res['driverName'],
+                from: res['from'],
+                loadNumber: res['loadNumber'],
+                price: res['price'],
+                status: res['status'],
+                to: res['to'],
+              };
+            }
+          });
+      }, 500);
+    } else {
+      this.loadsService
+        .getLoadById(this.loadId)
+        .subscribe((res) => {
+          if (res) {
             this.loads = {
               distance: res['distance'],
               driverName: res['driverName'],
@@ -48,44 +66,23 @@ export class CurrentDetailsPage implements OnInit {
               loadNumber: res['loadNumber'],
               price: res['price'],
               status: res['status'],
-              to: res['to']
+              to: res['to'],
             };
-            console.log(res['distance'])
           }
-        )
-      }, 500);
-    }
-    else{
-      this.isLoading = true;
-      this.loadsSub = this.loadsService.getLoadById(this.loadId).subscribe(
-        (res) => {
-          this.loads = {
-            distance: res['distance'],
-            driverName: res['driverName'],
-            from: res['from'],
-            loadNumber: res['loadNumber'],
-            price: res['price'],
-            status: res['status'],
-            to: res['to']
-          };
-          console.log(res['distance'])
-        }
-      )
+        });
     }
   }
+  ionViewWillEnter() {
 
-  update(){
-    if(this.loadId){
-      this.loadsService.updateLoad(this.loads, this.loadId).then(()=> {
+  }
+
+  update() {
+    if (this.loadId) {
+      this.loadsService.updateLoad(this.loads, this.loadId).then(() => {
         this.navCtrl.navigateBack('/loads/current');
         return;
-      })
+      });
     }
   }
 
-  ngOnDestroy() {
-    if (this.loadsSub) {
-      this.loadsSub.unsubscribe();
-    }
-  }
 }
