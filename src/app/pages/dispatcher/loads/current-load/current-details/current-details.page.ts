@@ -12,7 +12,6 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./current-details.page.scss'],
 })
 export class CurrentDetailsPage implements OnInit {
-  
   loads = {
     distance: '',
     driverName: '',
@@ -20,27 +19,49 @@ export class CurrentDetailsPage implements OnInit {
     loadNumber: '',
     price: '',
     status: '',
-    to: ''
+    to: '',
   };
   isLoading = false;
   loadId = null;
   private loadsSub: Subscription;
 
-  constructor(private loadsService: LoadsService, private activatedRoute: ActivatedRoute, private navCtrl: NavController) { }
+  constructor(
+    private loadsService: LoadsService,
+    private activatedRoute: ActivatedRoute,
+    private navCtrl: NavController
+  ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-  ionViewWillEnter(){
-
+  ionViewWillEnter() {
     this.loadId = this.activatedRoute.snapshot.paramMap.get('id');
 
-    if (!this.loadsService.getLoadById(this.loadId))
-    {
+    if (!this.loadsService.getLoadById(this.loadId)) {
       setTimeout(() => {
         this.isLoading = true;
-        this.loadsSub = this.loadsService.getLoadById(this.loadId).subscribe(
-          res => {
+        this.loadsSub = this.loadsService
+          .getLoadById(this.loadId)
+          .subscribe((res) => {
+            if (res) {
+              this.loads = {
+                distance: res['distance'],
+                driverName: res['driverName'],
+                from: res['from'],
+                loadNumber: res['loadNumber'],
+                price: res['price'],
+                status: res['status'],
+                to: res['to'],
+              };
+              console.log(res['distance']);
+            }
+          });
+      }, 500);
+    } else {
+      this.isLoading = true;
+      this.loadsSub = this.loadsService
+        .getLoadById(this.loadId)
+        .subscribe((res) => {
+          if (res) {
             this.loads = {
               distance: res['distance'],
               driverName: res['driverName'],
@@ -48,38 +69,20 @@ export class CurrentDetailsPage implements OnInit {
               loadNumber: res['loadNumber'],
               price: res['price'],
               status: res['status'],
-              to: res['to']
+              to: res['to'],
             };
-            console.log(res['distance'])
+            console.log(res['distance']);
           }
-        )
-      }, 500);
-    }
-    else{
-      this.isLoading = true;
-      this.loadsSub = this.loadsService.getLoadById(this.loadId).subscribe(
-        (res) => {
-          this.loads = {
-            distance: res['distance'],
-            driverName: res['driverName'],
-            from: res['from'],
-            loadNumber: res['loadNumber'],
-            price: res['price'],
-            status: res['status'],
-            to: res['to']
-          };
-          console.log(res['distance'])
-        }
-      )
+        });
     }
   }
 
-  update(){
-    if(this.loadId){
-      this.loadsService.updateLoad(this.loads, this.loadId).then(()=> {
+  update() {
+    if (this.loadId) {
+      this.loadsService.updateLoad(this.loads, this.loadId).then(() => {
         this.navCtrl.navigateBack('/loads/current');
         return;
-      })
+      });
     }
   }
 
