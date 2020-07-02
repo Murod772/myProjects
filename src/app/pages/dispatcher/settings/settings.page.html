@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Settings</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-button expand="block" (click)="enableDark()">Dark</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button expand="block" (click)="enableLight()">Light</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

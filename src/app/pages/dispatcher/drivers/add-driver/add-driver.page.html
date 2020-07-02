@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/dispatcher/drivers/active"></ion-back-button>
+  </ion-buttons>
+    <ion-title>New Driver</ion-title>
+    <!-- <ion-buttons slot="primary">
+      <ion-button color="dark" (click)="onCreateLoad()" [disabled]="!form.valid">
+        <ion-icon name="checkmark" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons> -->
+  </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <!-- <form [formGroup]="form" > -->
+    <ion-grid>
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-card>
+            <ion-card-header>
+              <div class = "ion-text-center">
+                <ion-card-title>Add New Driver</ion-card-title>
+              </div>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-item>
+                <ion-label position="floating">Driver Name or Email</ion-label>
+                <ion-input [(ngModel)]="participant" type="text" autocomplete autocorrect></ion-input>
+              </ion-item>
+              <div class = "ion-text-center ion-padding">
+                <ion-button expand="full" (click)="addDriver()">Search</ion-button>
+              </div>
+              <!-- <div class = "ion-text-center ion-padding">
+                <ion-button expand="full" (click)="check()">Check</ion-button>
+              </div>
+              <div class = "ion-text-center ion-padding">
+                <ion-button expand="full" (click)="checkOther() ">Check</ion-button>
+              </div> -->
+              <ion-item *ngFor="let usr of users">
+                <ion-label>
+                  {{ usr.email }}
+                  <p>{{ usr.name }}</p>
+                  <p>{{ usr.mc }}</p>
+                </ion-label>
+                    <!-- <ion-button color="danger" size="medium" fill="clear"  (click)="onCancelDriver(usr.id)" slot="end">
+                      <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+                    </ion-button> -->
+              </ion-item>          
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  <!-- </form> -->
+  </ion-content>
