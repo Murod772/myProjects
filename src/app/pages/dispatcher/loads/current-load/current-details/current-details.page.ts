@@ -1,7 +1,7 @@
 import { Subscription } from 'rxjs';
 import { LoadsService } from './../../../../../services/loads.service';
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 
 @Component({
@@ -9,80 +9,61 @@ import { NavController } from '@ionic/angular';
   templateUrl: './current-details.page.html',
   styleUrls: ['./current-details.page.scss'],
 })
-export class CurrentDetailsPage implements OnInit {
+export class CurrentDetailsPage implements OnInit, OnDestroy {
   
-  loads = {
-    distance: '',
-    driverName: '',
-    from: '',
-    loadNumber: '',
-    price: '',
-    status: '',
-    to: ''
-  };
+  load = null;
   isLoading = false;
-  loadId = '';
-  private loadsSub: Subscription;
-
-  constructor(private loadsService: LoadsService, private activatedRoute: ActivatedRoute, private navCtrl: NavController) {
+  loadId = null;
+  private routeSub: Subscription;
+  private loadSub: Subscription;
+  constructor(private loadsService: LoadsService, private router: Router, private activatedRoute: ActivatedRoute, private navCtrl: NavController) {
     
     
   }
   
   ngOnInit() {
     
-    this.activatedRoute.paramMap.subscribe(paramMap => {
+   this.routeSub = this.activatedRoute.paramMap.subscribe(paramMap => {
       this.loadId = paramMap.get('loadId');
     })
 
-        
     if (!this.loadsService.getLoadById(this.loadId) ) {
       setTimeout(() => {
-       this.loadsService
+        this.loadSub = this.loadsService
           .getLoadById(this.loadId)
-          .subscribe((res) => {
+          .subscribe(res => {
             if (res) {
-              this.loads = {
-                distance: res['distance'],
-                driverName: res['driverName'],
-                from: res['from'],
-                loadNumber: res['loadNumber'],
-                price: res['price'],
-                status: res['status'],
-                to: res['to'],
-              };
+              this.load = res;
             }
-          });
+          })
       }, 500);
     } else {
-      this.loadsService
-        .getLoadById(this.loadId)
-        .subscribe((res) => {
-          if (res) {
-            this.loads = {
-              distance: res['distance'],
-              driverName: res['driverName'],
-              from: res['from'],
-              loadNumber: res['loadNumber'],
-              price: res['price'],
-              status: res['status'],
-              to: res['to'],
-            };
-          }
-        });
-    }
-  }
-  ionViewWillEnter() {
-
-  }
-
-  update() {
-    if (this.loadId) {
-      this.loadsService.updateLoad(this.loads, this.loadId).then(() => {
-        this.navCtrl.navigateBack('/loads/current');
-        return;
+      this.loadSub = this.loadsService
+      .getLoadById(this.loadId)
+      .subscribe(res => {
+        if (res) {
+          this.load = res;
+        }
       });
     }
   }
 
+  goBack(){
+    this.router.navigateByUrl('dispatcher/loads/current')
+  }
+
+
+  // update() {
+  //   if (this.loadId) {
+  //     this.loadsService.updateLoad(this.load, this.loadId).then(() => {
+  //       this.navCtrl.navigateBack('/loads/current');
+  //       return;
+  //     });
+  //   }
+  // }
+
+  ngOnDestroy(){
+    this.loadSub.unsubscribe();
+    this.routeSub.unsubscribe();
+  }
 }

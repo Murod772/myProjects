@@ -1,5 +1,5 @@
 import { DriversService } from 'src/app/services/drivers.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './inactive-drivers.page.html',
   styleUrls: ['./inactive-drivers.page.scss'],
 })
-export class InactiveDriversPage implements OnInit {
+export class InactiveDriversPage implements OnInit, OnDestroy {
   
   drivers = [];
   isLoading = false;

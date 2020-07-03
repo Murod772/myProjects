@@ -1,9 +1,9 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Details</ion-title>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/dispatcher/loads/current"></ion-back-button>
+      <ion-back-button (click)="goBack()"></ion-back-button>
   </ion-buttons>
+    <ion-title>Details</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -11,7 +11,7 @@
   <div *ngIf="isLoading" class="ion-text-center">
       <ion-spinner color="primary"></ion-spinner>
     </div>
-  <ion-grid *ngIf="!isLoading">
+  <ion-grid *ngIf="!isLoading && load">
     <ion-row>
       <ion-col>
         <ion-card>
@@ -20,13 +20,13 @@
                 <ion-col>
                   <ion-card-content>
                     <p>{{"Status"}}</p>
-                    <div id="status">{{ loads.status }}</div>
+                    <div id="status">{{ load.status }}</div>
                     </ion-card-content>
                   </ion-col>
                   <ion-col>
                       <ion-card-content>
                           <p>{{"Distance"}}</p>
-                          <div>{{ loads.distance | number}} mile</div>
+                          <div>{{ load.distance | number}} mile</div>
                         </ion-card-content>
                   </ion-col>
               </ion-row>
@@ -34,13 +34,13 @@
                   <ion-col>
                       <ion-card-content>
                           <p>{{"Driver Name"}}</p>
-                          <div>{{ loads.driverName }}</div>
+                          <div>{{ load.driverName }}</div>
                         </ion-card-content>
                   </ion-col>
                   <ion-col>
                       <ion-card-content>
                           <p>{{"ID"}}</p>
-                          <div>{{ loads.loadNumber }}</div>
+                          <div>{{ load.loadNumber }}</div>
                         </ion-card-content>
                   </ion-col>
               </ion-row>
@@ -48,13 +48,13 @@
                   <ion-col>
                       <ion-card-content>
                           <p>{{"From"}}</p>
-                          <div>{{ loads.from }}</div>
+                          <div>{{ load.from }}</div>
                         </ion-card-content>
                   </ion-col>
                   <ion-col>
                       <ion-card-content>
                           <p>{{"To"}}</p>
-                          <div>{{ loads.to }}</div>
+                          <div>{{ load.to }}</div>
                         </ion-card-content>
                   </ion-col>
               </ion-row>
@@ -62,13 +62,13 @@
                 <ion-col>
                     <ion-card-content>
                         <p>{{"Rate"}}</p>
-                        <div>{{ loads.price | currency }}</div>
+                        <div>{{ load.price | currency }}</div>
                       </ion-card-content>
                 </ion-col>
                 <ion-col>
                     <ion-card-content>
                         <p>{{"Dispatcher"}}</p>
-                        <div>{{ loads.loadNumber }}</div>
+                        <div>{{ load.loadNumber }}</div>
                       </ion-card-content>
                 </ion-col>
             </ion-row>

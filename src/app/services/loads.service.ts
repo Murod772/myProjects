@@ -129,12 +129,14 @@ export class LoadsService {
 
     if (this.comp) {
       if (load) {
-        this.addPastLoad(
-          load
-        ); /**If load is defined then add this load to firebase then proceed on deleting it */
+        this.addPastLoad(load); /**If load is defined then add this load to firebase then proceed on deleting it */
       }
       return this.db.doc(`companies/${this.comp}/currentLoads/${id}`).delete();
     }
+  }
+
+  removeLoad(id){
+    return this.db.doc(`companies/${this.comp}/currentLoads/${id}`).delete();
   }
 
   updateLoad(load, id){

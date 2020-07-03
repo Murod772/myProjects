@@ -1,5 +1,5 @@
 import { LoadsService } from './../../../../services/loads.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './past-load.page.html',
   styleUrls: ['./past-load.page.scss'],
 })
-export class PastLoadPage implements OnInit {
+export class PastLoadPage implements OnInit, OnDestroy {
 
   match = 'Ready';
   loads = [];

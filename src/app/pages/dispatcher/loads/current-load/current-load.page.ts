@@ -1,6 +1,6 @@
 import { Subscription } from 'rxjs';
 import { LoadsService } from './../../../../services/loads.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { take, map } from 'rxjs/operators';
 
 @Component({
@@ -8,7 +8,7 @@ import { take, map } from 'rxjs/operators';
   templateUrl: './current-load.page.html',
   styleUrls: ['./current-load.page.scss'],
 })
-export class CurrentLoadPage implements OnInit {
+export class CurrentLoadPage implements OnInit, OnDestroy {
   match = 'Ready';
   loads = [];
   isLoading = false;
@@ -23,6 +23,7 @@ export class CurrentLoadPage implements OnInit {
   }
 
   ionViewWillEnter(){
+    console.log('Hello')
     if (!this.loadsService.getLoad()) {
       setTimeout(() => {
         this.isLoading = true;
@@ -63,8 +64,8 @@ export class CurrentLoadPage implements OnInit {
   }
 
   ngOnDestroy() {
-    if (this.loadsSub) {
-      this.loadsSub.unsubscribe();
-    }
+    // if (this.loadsSub) {
+    //   this.loadsSub.unsubscribe();
+    // }
   }
 }
