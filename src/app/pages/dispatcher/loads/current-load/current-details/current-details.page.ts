@@ -22,7 +22,6 @@ export class CurrentDetailsPage implements OnInit, OnDestroy {
   }
   
   ngOnInit() {
-    
    this.routeSub = this.activatedRoute.paramMap.subscribe(paramMap => {
       this.loadId = paramMap.get('loadId');
     })
