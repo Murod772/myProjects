@@ -64,8 +64,8 @@ export class CurrentLoadPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // if (this.loadsSub) {
-    //   this.loadsSub.unsubscribe();
-    // }
+    if (this.loadsSub) {
+      this.loadsSub.unsubscribe();
+    }
   }
 }

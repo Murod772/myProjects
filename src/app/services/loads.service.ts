@@ -90,9 +90,10 @@ export class LoadsService {
 
     if (this.comp) {
       // console.log('hello',this.comp)
-      return this.db.collection(`companies/${this.comp}/currentLoads`).valueChanges({idField: 'id'}).pipe(
-        take(1)
-      )
+      return this.db.collection(`companies/${this.comp}/currentLoads`).valueChanges({idField: 'id'})
+      // .pipe(
+       // take(1)
+     // )
     }
   }
 

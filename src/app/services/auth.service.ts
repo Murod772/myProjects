@@ -29,9 +29,6 @@ export class AuthService {
   constructor(private afAuth: AngularFireAuth, private db: AngularFirestore, private navCtrl: NavController, public menu: MenuController) {
     
     this.user = this.afAuth.authState.pipe(
-      tap((user) => {
-        this.id = user.uid;
-      }),
       switchMap(user => {
         if (user) {
           this.id = user.uid;
@@ -42,8 +39,7 @@ export class AuthService {
       })
     )
     
-    // this.id = firebase.auth().currentUser.uid;
-    
+
    }
 
 

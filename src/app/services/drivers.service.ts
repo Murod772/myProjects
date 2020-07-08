@@ -1,21 +1,23 @@
+import { environment } from './../../environments/environment';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'firebase';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { take, map, tap, delay, switchMap, combineLatest } from 'rxjs/operators';
-// import * as firebase from 'firebase/app';
-// import { forkJoin, from } from 'rxjs';
-// import { AngularFireStorage, AngularFireStorageReference } from '@angular/fire/storage';
-
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DriversService {
 
+
+  private bearerToken = environment.samsara.bearerToken;
+
   user: User;
   comp = '';
+  baseUrl = 'https://robenwayne.herokuapp.com/https://api.samsara.com';
 
   getUsers() {
     return this.auth.user.pipe(
@@ -28,10 +30,26 @@ export class DriversService {
     )
   }
 
-  constructor(private db: AngularFirestore, private auth: AuthService, private afAuth: AngularFireAuth) {
+  constructor(private http: HttpClient, private db: AngularFirestore, private auth: AuthService, private afAuth: AngularFireAuth) {
     this.getUsers().subscribe((user) => {
       this.comp = user;
    });
+  }
+
+  getLocations(id) {
+    const token = `Bearer ${this.bearerToken}`;
+    const headers = {
+      Authorization: token
+    };
+    return this.http.get(`${this.baseUrl}/fleet/vehicles/locations?vehicleIds=${id}`, {headers}).pipe(take(1))
+  }
+
+  getOneDriver() {
+    const token = `Bearer ${this.bearerToken}`;
+    const headers = {
+      Authorization: token
+    };
+    return this.http.get(`${this.baseUrl}/fleet/vehicles?limit=512`, {headers});
   }
 
   findUser(value) {

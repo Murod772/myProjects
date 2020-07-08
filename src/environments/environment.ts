@@ -13,6 +13,9 @@ export const environment = {
     messagingSenderId: "117227278729",
     appId: "1:117227278729:web:d51a18c6b1db2966e65158",
     measurementId: "G-PWWKEETBMM"
+  },
+  samsara: {
+    bearerToken: "samsara_api_mRSjfysyeoqRl2JyU9bitFDB3sF6gp"
   }
 };
 

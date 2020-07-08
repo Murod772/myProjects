@@ -1,0 +1,7 @@
+{
+  "/api/*": {
+      "target": "https://api.samsara.com",
+      "secure": false,
+      "logLevel": "debug"
+  }
+}
