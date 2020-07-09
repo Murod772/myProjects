@@ -1,13 +1,12 @@
 import { DriversService } from 'src/app/services/drivers.service';
 import { Component, OnInit } from '@angular/core';
-const SuperArray = require('super-array');
+const SuperArray = import('super-array');
 @Component({
   selector: 'app-active-drivers',
   templateUrl: './active-drivers.page.html',
   styleUrls: ['./active-drivers.page.scss'],
 })
 export class ActiveDriversPage implements OnInit {
-
   loc = '';
   driver = '';
   id = '';
@@ -31,7 +30,6 @@ export class ActiveDriversPage implements OnInit {
     });
   }
 
-  
   constructor(private driversService: DriversService) {
     this.driversService.getOneDriver().subscribe((drivers: any) => {
       // const myArray = new SuperArray(drivers.data, function(item) { return item.name });
@@ -46,16 +44,13 @@ export class ActiveDriversPage implements OnInit {
       // console.log(myArray.get('6656').staticAssignedDriver.name)
     });
   }
-  
-  getLocation(){
+
+  getLocation() {
     console.log(this.id);
     this.driversService.getLocations(this.id).subscribe((locations: any) => {
-      this.loc = locations.data[0].location.reverseGeo.formattedLocation
+      this.loc = locations.data[0].location.reverseGeo.formattedLocation;
       console.log(this.loc);
-    })
+    });
   }
-  ngOnInit() {
-  }
-
-
+  ngOnInit() {}
 }
