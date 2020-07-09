@@ -13,17 +13,12 @@ export class CurrentLoadPage implements OnInit, OnDestroy {
   loads = [];
   isLoading = false;
   private loadsSub: Subscription;
-  constructor(private loadsService: LoadsService) {
+  constructor(private loadsService: LoadsService) {}
 
+  ngOnInit() {}
 
-   }
-
-  ngOnInit() {
-    
-  }
-
-  ionViewWillEnter(){
-    console.log('Hello')
+  ionViewWillEnter() {
+    console.log('Hello');
     if (!this.loadsService.getLoad()) {
       setTimeout(() => {
         this.isLoading = true;
@@ -31,15 +26,10 @@ export class CurrentLoadPage implements OnInit, OnDestroy {
           const newLoad = [];
           res.map(async (load: any) => {
             load.status == this.match
-              ? newLoad.push(
-                  load
-                ) /**if it is ready type load then add it to newload array */
-              : await this.loadsService.deleteLoad(
-                  load.id,
-                  load
-                ); /**Here i checked the res and when even i find a load that is Delivered i delete it */
+              ? newLoad.push(load)
+              : await this.loadsService.deleteLoad(load.id, load);
           });
-          this.loads = newLoad; //now it will only have loads that are Ready
+          this.loads = newLoad;
           this.isLoading = false;
         });
       }, 500);
