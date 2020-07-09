@@ -9,7 +9,7 @@ import { take, map } from 'rxjs/operators';
   styleUrls: ['./current-load.page.scss'],
 })
 export class CurrentLoadPage implements OnInit, OnDestroy {
-  match = 'Ready';
+  match = 'Assigned';
   loads = [];
   isLoading = false;
   private loadsSub: Subscription;

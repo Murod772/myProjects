@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
 })
 export class PastLoadPage implements OnInit, OnDestroy {
 
-  match = 'Ready';
+  match = 'Assigned';
   loads = [];
   isLoading = false;
   private loadsSub: Subscription;

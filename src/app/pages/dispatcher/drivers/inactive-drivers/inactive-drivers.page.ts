@@ -11,7 +11,7 @@ export class InactiveDriversPage implements OnInit, OnDestroy {
   
   drivers = [];
   isLoading = false;
-  match = 'Ready';
+  match = 'Assigned';
   private driversSub: Subscription;
   
   constructor(private driverService: DriversService) { }

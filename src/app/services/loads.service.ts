@@ -143,9 +143,6 @@ export class LoadsService {
       if (load) {
         this.addPastLoad(load); /**If load is defined then add this load to firebase then proceed on deleting it */
       }
-      else{
-        console.log('load is undefined')
-      }
       return this.db.doc(`companies/${this.comp}/currentLoads/${id}`).delete();
     }
   }
