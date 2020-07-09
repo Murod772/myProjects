@@ -1,4 +1,3 @@
-
 import { AuthService } from 'src/app/services/auth.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -20,27 +19,30 @@ interface LoadData {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LoadsService {
-
   comp = '';
 
   getUsers() {
     return this.auth.user.pipe(
       take(1),
-      map(user => {
+      map((user) => {
         //  user['company'];
         this.comp = user['company'];
         return user['company'];
       })
-    )
+    );
   }
 
-  constructor(private db: AngularFirestore, private afAuth: AngularFireAuth, private auth: AuthService) { 
-    this.getUsers().subscribe(user => {
+  constructor(
+    private db: AngularFirestore,
+    private afAuth: AngularFireAuth,
+    private auth: AuthService
+  ) {
+    this.getUsers().subscribe((user) => {
       this.comp = user;
-   });
+    });
   }
 
   async addLoad(load) {
@@ -62,7 +64,7 @@ export class LoadsService {
       });
   }
 
-    /** Added this function to add data in pastload on firebase */
+  /** Added this function to add data in pastload on firebase */
   addPastLoad(load) {
     console.log(this.comp);
     load.creator = auth().currentUser.uid;
@@ -82,22 +84,19 @@ export class LoadsService {
       });
   }
 
-  getLoad(){
-
+  getLoad() {
     this.getUsers().subscribe((user) => {
       this.comp = user;
     });
 
     if (this.comp) {
-      // console.log('hello',this.comp)
-      return this.db.collection(`companies/${this.comp}/currentLoads`).valueChanges({idField: 'id'})
-      // .pipe(
-       // take(1)
-     // )
+      return this.db
+        .collection(`companies/${this.comp}/currentLoads`)
+        .valueChanges({ idField: 'id' });
     }
   }
 
-  getOnePastLoad(id){
+  getOnePastLoad(id) {
     this.getUsers().subscribe((user) => {
       this.comp = user;
     });
@@ -141,26 +140,26 @@ export class LoadsService {
 
     if (this.comp) {
       if (load) {
-        this.addPastLoad(load); /**If load is defined then add this load to firebase then proceed on deleting it */
+        this.addPastLoad(load);
       }
       return this.db.doc(`companies/${this.comp}/currentLoads/${id}`).delete();
     }
   }
 
-  removeLoad(id){
+  removeLoad(id) {
     return this.db.doc(`companies/${this.comp}/currentLoads/${id}`).delete();
   }
 
-  updateLoad(load, id){
+  updateLoad(load, id) {
     this.getUsers().subscribe((user) => {
       this.comp = user;
     });
 
     if (this.comp) {
       // console.log('hello',this.comp)
-      return this.db.doc(`companies/${this.comp}/currentLoads/${id}`).update(
-        load
-      )
+      return this.db
+        .doc(`companies/${this.comp}/currentLoads/${id}`)
+        .update(load);
     }
   }
 }
