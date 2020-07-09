@@ -35,8 +35,8 @@
                     <div class="ion-text-right">
                       <ion-button
                         fill="clear"
-                        [routerLink]="['/', 'loads', 'assign','edit', load.id]"
-                        ><ion-icon
+                        [routerLink]="['/', 'dispatcher','loads', 'past', 'edit', load.id]">
+                        <ion-icon
                           slot="icon-only"
                           name="create-outline"
                         ></ion-icon
@@ -92,7 +92,7 @@
                         shape="round"
                         expand="full"
                         color="primary"
-                        [routerLink]="['/', 'loads', 'assign','edit', load.id]"
+                        [routerLink]="[load.id]"
                         >More</ion-button
                       >
                     </div>

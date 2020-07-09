@@ -97,6 +97,18 @@ export class LoadsService {
     }
   }
 
+  getOnePastLoad(id){
+    this.getUsers().subscribe((user) => {
+      this.comp = user;
+    });
+
+    if (this.comp) {
+      return this.db
+        .doc(`companies/${this.comp}/pastLoad/${id}`)
+        .valueChanges();
+    }
+  }
+
   getPastLoad() {
     this.getUsers().subscribe((user) => {
       this.comp = user;
@@ -106,12 +118,11 @@ export class LoadsService {
       console.log('getting past loads in past load function');
       return this.db
         .collection(`companies/${this.comp}/pastLoad`)
-        .valueChanges({ idField: 'id' })
-        .pipe(take(1));
+        .valueChanges({ idField: 'id' });
     }
   }
 
-  getLoadById(id) {
+  getOneCurrentLoad(id) {
     this.getUsers().subscribe((user) => {
       this.comp = user;
     });

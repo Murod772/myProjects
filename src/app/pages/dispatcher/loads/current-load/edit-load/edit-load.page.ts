@@ -19,10 +19,10 @@ export class EditLoadPage implements OnInit {
     this.activatedRoute.paramMap.subscribe(paramMap => {
       this.loadId = paramMap.get('loadId');
     })
-        if (!this.loadsService.getLoadById(this.loadId)) {
+        if (!this.loadsService.getOneCurrentLoad(this.loadId)) {
       setTimeout(() => {
         this.loadsService
-        .getLoadById(this.loadId)
+        .getOneCurrentLoad(this.loadId)
         .subscribe((res) => {
           if (res) {
             this.load = res;
@@ -31,7 +31,7 @@ export class EditLoadPage implements OnInit {
       }, 500);
     } else {
       this.loadsService
-      .getLoadById(this.loadId)
+      .getOneCurrentLoad(this.loadId)
       .subscribe((res) => {
         if (res) {
           this.load = res;

@@ -14,22 +14,18 @@ export class CurrentDetailsPage implements OnInit, OnDestroy {
   load = null;
   isLoading = false;
   loadId = null;
-  private routeSub: Subscription;
   private loadSub: Subscription;
-  constructor(private loadsService: LoadsService, private router: Router, private activatedRoute: ActivatedRoute, private navCtrl: NavController) {
-    
-    
-  }
-  
+
+  constructor(private loadsService: LoadsService, private router: Router, private activatedRoute: ActivatedRoute, private navCtrl: NavController) {}
   ngOnInit() {
-   this.routeSub = this.activatedRoute.paramMap.subscribe(paramMap => {
+    this.activatedRoute.paramMap.subscribe(paramMap => {
       this.loadId = paramMap.get('loadId');
     })
 
-    if (!this.loadsService.getLoadById(this.loadId) ) {
+    if (!this.loadsService.getOneCurrentLoad(this.loadId) ) {
       setTimeout(() => {
         this.loadSub = this.loadsService
-          .getLoadById(this.loadId)
+          .getOneCurrentLoad(this.loadId)
           .subscribe(res => {
             if (res) {
               this.load = res;
@@ -38,7 +34,7 @@ export class CurrentDetailsPage implements OnInit, OnDestroy {
       }, 500);
     } else {
       this.loadSub = this.loadsService
-      .getLoadById(this.loadId)
+      .getOneCurrentLoad(this.loadId)
       .subscribe(res => {
         if (res) {
           this.load = res;
@@ -46,12 +42,6 @@ export class CurrentDetailsPage implements OnInit, OnDestroy {
       });
     }
   }
-
-  goBack(){
-    this.router.navigateByUrl('dispatcher/loads/current')
-  }
-
-
   // update() {
   //   if (this.loadId) {
   //     this.loadsService.updateLoad(this.load, this.loadId).then(() => {
@@ -63,6 +53,5 @@ export class CurrentDetailsPage implements OnInit, OnDestroy {
 
   ngOnDestroy(){
     this.loadSub.unsubscribe();
-    this.routeSub.unsubscribe();
   }
 }

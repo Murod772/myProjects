@@ -16,37 +16,35 @@ export class ActiveDriversPage implements OnInit {
     
   }
   
-  getDriver(){
+  getDriver() {
     this.driversService.getOneDriver().subscribe((drivers: any) => {
       // const myArray = new SuperArray(drivers.data, function(item) { return item.name });
-      for (var i = 0; i < drivers.data.length; i++){
-        if (drivers.data[i].staticAssignedDriver.name == 'Mohamed Ahmed Ismael'){
-          console.log(drivers.data[i]);
-          this.id = drivers.data[i].id;
-        }
-        else{
-          console.log('nothing')
+      for (var i = 0; i < drivers.data.length; i++) {
+        if (drivers.data[i].staticAssignedDriver) {
+          if (drivers.data[i].staticAssignedDriver.name === 'Hussein Subane Mumin') {
+            console.log(drivers.data[i]);
+            this.id = drivers.data[i].id;
+          }
         }
       }
-      //  console.log(myArray.get('6656').staticAssignedDriver.name)
-    })
+      // console.log(myArray.get('6656').staticAssignedDriver.name)
+    });
   }
 
   
   constructor(private driversService: DriversService) {
     this.driversService.getOneDriver().subscribe((drivers: any) => {
       // const myArray = new SuperArray(drivers.data, function(item) { return item.name });
-      for (var i = 0; i < drivers.data.length; i++){
-        if (drivers.data[i].staticAssignedDriver.name == 'Mohamed Ahmed Ismael'){
-          console.log(drivers.data[i]);
-          this.id = drivers.data[i].id;
-        }
-        else{
-          console.log('nothing')
+      for (var i = 0; i < drivers.data.length; i++) {
+        if (drivers.data[i].staticAssignedDriver) {
+          if (drivers.data[i].staticAssignedDriver.name === 'Hussein Subane Mumin'){
+            console.log(drivers.data[i]);
+            this.id = drivers.data[i].id;
+          }
         }
       }
-      //  console.log(myArray.get('6656').staticAssignedDriver.name)
-    })
+      // console.log(myArray.get('6656').staticAssignedDriver.name)
+    });
   }
   
   getLocation(){
