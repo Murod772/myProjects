@@ -8,8 +8,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./past-load.page.scss'],
 })
 export class PastLoadPage implements OnInit, OnDestroy {
-
-  match = 'Assigned';
+  match = 'Delivered';
   loads = [];
   isLoading = false;
   private loadsSub: Subscription;
@@ -21,15 +20,22 @@ export class PastLoadPage implements OnInit, OnDestroy {
       setTimeout(() => {
         this.isLoading = true;
         this.loadsSub = this.loadsService.getPastLoad().subscribe((res) => {
-          /**Getting Past Load and saving it */
-          this.loads = res;
+          const newLoad = [];
+          res.map(async (load: any) => {
+            load.status == this.match ? newLoad.push(load) : null;
+          });
+          this.loads = newLoad;
           this.isLoading = false;
         });
       }, 500);
     } else {
       this.isLoading = true;
       this.loadsSub = this.loadsService.getPastLoad().subscribe((res) => {
-        this.loads = res; /**Getting Past Load and saving it */
+        const newLoad = [];
+        res.map(async (load: any) => {
+          load.status == this.match ? newLoad.push(load) : null;
+        });
+        this.loads = newLoad;
         this.isLoading = false;
       });
     }
