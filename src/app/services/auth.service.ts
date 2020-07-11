@@ -63,7 +63,7 @@ export class AuthService {
         created: firebase.firestore.FieldValue.serverTimestamp()
       }).then(() => {
           return this.db.doc(`companies/${credentials.company}/users/${data.user.uid}`).set({
-            name: credentials.name,
+            name: credentials.name.toLowerCase(),
             company: credentials.company,
             mc: credentials.mc,
             phone: credentials.phone,
@@ -74,7 +74,7 @@ export class AuthService {
            this.comp = credentials.company;
           }).then(() => {
             if(credentials.role == 'DRIVER'){
-              return this.db.collection(`companies/${this.comp}/drivers/inactive/${data.user.uid}`).add({
+              return this.db.doc(`companies/${this.comp}/drivers/status/inactive/${data.user.uid}`).set({
                 name: credentials.name,
                 company: credentials.company,
                 mc: credentials.mc,

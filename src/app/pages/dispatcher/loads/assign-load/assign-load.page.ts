@@ -26,7 +26,7 @@ export class AssignLoadPage implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      driverName: ['', Validators.required],
+      driverName: ['', Validators.required].toString().toLowerCase(),
       loadNumber: ['', Validators.required],
       from: ['', Validators.required],
       to: ['', Validators.required],

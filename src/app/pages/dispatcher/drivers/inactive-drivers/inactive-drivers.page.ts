@@ -11,7 +11,7 @@ export class InactiveDriversPage implements OnInit, OnDestroy {
   
   drivers = [];
   isLoading = false;
-  match = 'Assigned';
+  match = 'Ready';
   private driversSub: Subscription;
   
   constructor(private driverService: DriversService) { }
@@ -20,10 +20,10 @@ export class InactiveDriversPage implements OnInit, OnDestroy {
   }
 
   ionViewWillEnter(){
-    if(this.driverService.getDriver()){
+    if(this.driverService.getInactiveDriver()){
       setTimeout(() => {
         this.isLoading = true;
-        this.driversSub = this.driverService.getDriver().subscribe((res) => {
+        this.driversSub = this.driverService.getInactiveDriver().subscribe((res) => {
           this.drivers = res;
           this.isLoading = false
         });
@@ -32,7 +32,7 @@ export class InactiveDriversPage implements OnInit, OnDestroy {
     else{
       setTimeout(() => {
         this.isLoading = true;
-        this.driversSub = this.driverService.getDriver().subscribe((res) => {
+        this.driversSub = this.driverService.getInactiveDriver().subscribe((res) => {
           this.drivers = res;
           this.isLoading = false
         });

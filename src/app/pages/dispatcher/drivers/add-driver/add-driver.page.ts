@@ -21,7 +21,7 @@ export class AddDriverPage implements OnInit {
   }
 
   addDriver() {
-    const obs = this.driverService.findUser(this.participant);
+    const obs = this.driverService.findUser(this.participant.toLowerCase());
 
     forkJoin(obs).subscribe(res => {
       if (!res) {
@@ -33,7 +33,7 @@ export class AddDriverPage implements OnInit {
         }
         console.log(res);
       }
-      console.log('it works:', this.participant)
+      console.log('it works:', this.participant.toLowerCase())
       this.participant = '';
     }, error => {
    console.log('Here you got an error: ', error);

@@ -63,23 +63,34 @@ export class DriversService {
     return [email, name];
   }
 
-  addDriver(){
-    this.getUsers().subscribe((user) => {
-      this.comp = user;
-    });
-    if(this.comp){
-      return this.db.collection(`companies/${this.comp}/drivers/inactive/ready`, ref => ref.where('status', '==', 'Ready')).add
-    }
-  }
+  // addDriver(){
+  //   this.getUsers().subscribe((user) => {
+  //     this.comp = user;
+  //   });
+  //   if(this.comp){
+  //     return this.db.collection(`companies/${this.comp}/drivers/inactive`, ref => ref.where('status', '==', 'Ready')).add
+  //   }
+  // }
 
-  getDriver(){
+  getInactiveDriver(){
     this.getUsers().subscribe((user) => {
       this.comp = user;
     });
     if(this.comp){
-      return this.db.collection(`companies/${this.comp}/users`, ref => ref.where('status', '==', 'Ready')).valueChanges({idField: 'id'}).pipe(
+      return this.db.collection(`companies/${this.comp}/drivers/status/inactive`, ref => ref.where('status', '==', 'Ready')).valueChanges({idField: 'id'}).pipe(
         take(1)
       )
     }
   }
+
+  // getInactiveDriver(){
+  //   this.getUsers().subscribe((user) => {
+  //     this.comp = user;
+  //   });
+  //   if(this.comp){
+  //     return this.db.collection(`companies/${this.comp}/drivers/inactive`, ref => ref.where('status', '==', 'Ready')).valueChanges({idField: 'id'}).pipe(
+  //       take(1)
+  //     )
+  //   }
+  // }
 }
